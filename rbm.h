@@ -8,74 +8,57 @@ using namespace arma;
 
 namespace rbm {
     
-    struct StepResults
+    struct Biases
     {
-        mat hiddenMatrix;
-        mat visibleMatrix;
-        mat jointDensity;
-        mat hiddenDensity;
-        mat visibleDensity;
-        
+        mat resultBiases;
+        mat sourceBiases;
     };
     
-    class Step {
-        private:
-            mat sourceMatrix;
-            mat targetBiases;
-            mat weights;
-            mat jointDensityDistribution;
-            mat sourceDensity;
-            mat targetDensity;
+    struct Output
+    {
+        mat result;
+        mat coincidence;
+        mat density;
+    };
+    
+    struct Configuration {
+
+        unsigned int resultDimensions;
+        unsigned int sourceDimensions;
             
-        public:
-            StepResults forwards();
-            StepResults backwards();
-            mat getVisible();
-            mat getHidden();
-        
-    };
-    
-    class Configuration {
-        private:
-            unsigned int numResults;
-            double weightCost;
-            double momentum;
-            double epsWeights;
-            double epsVisibleBias;
-            double epsHiddenBias;
-            double iterations;
-        
-        public:
+        unsigned int iterations;
+            
+        double weightCost;
+        double momentum;
+        double epsWeights;
+        double epsSourceBias;
+        double epsResultBias;
         
     };
     
     class RBM : public Component{
 
             private:
-                    mat weights;
-                    mat sourceBiases;
-                    mat resultBiases;
+                    mat * weights;
 
-                    unsigned int numCases;
-                    unsigned int numDims;
-                    unsigned int numResults;
+                    Configuration * configuration;
+                    Biases * biases;
 
-                    Configuration config;
+                    Output stepRBM( mat matrix );
 
-                    int stepRBM( 	mat sourceMatrix,
-                                                    mat targetBiases,
-                                                    mat weights,
-                                                    mat * targetProbs,
-                                                    mat * jointDensityMatrix,
-                                                    mat * sourceDensity,
-                                                    mat * targetDensity );
+                    mat generateProbabilityMatrix( 	
+                                        mat matrix,
+                                        mat bias,
+                                        mat weights 
+                    );
 
-                    int preLearn();
+                    mat sampleDistribution( mat matrix );
 
             public:
                     int doLearn( );
 
-                    int doRun( mat inputMatrix, mat *returnMatrix );
+                    int runForwards( mat matrix );
+                    int runBackwards( mat matrix );
 
                     RBM( Configuration config );
                     ~RBM();

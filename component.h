@@ -8,7 +8,8 @@ namespace deeplearn {
 
 		protected:
 			mat * sourceMatrix;
-			mat * targetMatrix;
+			mat * resultMatrix;
+            
 			Component * nextStep;
 			
 			
