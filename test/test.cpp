@@ -1,11 +1,15 @@
-#include "UnitTest++.h"
+#include <iostream>
+#include "gtest/gtest.h"
 
-  TEST(FailSpectacularly)
-  {
-    CHECK(true);
+  TEST(SimpleTest, Pass) {
+    EXPECT_TRUE(true);
   }
 
-  int main()
-  {
-    return UnitTest::RunAllTests();
+  TEST(SimpleTest, Fail) {
+    EXPECT_TRUE(false);
+  }
+
+  GTEST_API_ int main( int argc, char **argv ) {
+    testing::InitGoogleTest( &argc, argv );
+    return RUN_ALL_TESTS();
   }

@@ -16,3 +16,11 @@ rerun.txt
 pickle-email-*.html
 
 nbproject/
+/test/gtest/fused-src/gtest/.deps/
+/test/gtest/src/.deps/
+/test/gtest/test/.deps/
+/test/gtest/samples/.deps/
+/test/gtest/src/.libs/
+/test/gtest/lib/.libs/
+/test/gtest/samples/.libs/
+/test/temp/lib/.libs/
