@@ -1,7 +1,4 @@
 all:
+	g++ -c ./DeepBelief/rbm.cpp -o ./obj/rbm.o
 
-	g++ -c component.cpp
-
-	g++ -c rbm.cpp
-
-	g++ rbm.o component.o -larmadillo deeplearn.cpp -o deeplearn
+#	g++ rbm.o component.o -larmadillo deeplearn.cpp -o deeplearn
