@@ -1,4 +1,14 @@
-all:
-	g++ -c ./DeepBelief/rbm.cpp -o ./obj/rbm.o
+INCLUDE_DIR=./include
+LIB_DIR=./lib
+COMMON_DIRS=-I$(INCLUDE_DIR) -L$(LIB_DIR)
 
-#	g++ rbm.o component.o -larmadillo deeplearn.cpp -o deeplearn
+PACKAGES=./DeepBelief/RBM.o
+
+build: $(PACKAGES)
+	ar -rv ./lib/libMedusa.a $(PACKAGES)
+
+./DeepBelief/RBM.o: ./DeepBelief/RBM.cpp
+	g++ -c $(COMMON_DIRS) ./DeepBelief/RBM.cpp -o ./DeepBelief/RBM.o
+
+
+
