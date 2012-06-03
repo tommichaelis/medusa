@@ -17,7 +17,7 @@ namespace medusa {
         
         virtual mat run( mat input ) = 0;
         
-        virtual int learnIterative( mat matrix, mat classifiers ) = 0;
+        virtual int learnIterative( mat matrix, umat classifiers ) = 0;
         mat runIterative( mat matrix );
         
         void setNextLayer( ML_Layer* next );

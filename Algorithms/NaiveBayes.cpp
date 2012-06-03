@@ -1,6 +1,5 @@
 #include "Algorithms/NaiveBayes.h"
 #include "Exceptions/MatrixSizeException.h"
-#include "map"
 
 namespace medusa {
 
@@ -11,7 +10,6 @@ namespace medusa {
         }
 
         for ( int iter = 0; iter < data.n_rows; data++ ) {
-            distributions[ classifiers[iter] ];
         }
 
     }
@@ -21,7 +19,6 @@ namespace medusa {
     }
 
     NaiveBayes::NaiveBayes( NaiveBayesConfig config ) {
-        distributions = new map< int, GaussianDist > ( );
     }
 
     NaiveBayes::~NaiveBayes( ) {

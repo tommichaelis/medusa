@@ -12,9 +12,14 @@ PACKAGES=   ./build/ML_Layer.o \
 	    ./build/Algorithms/RBM.o \
 	    ./build/Algorithms/NaiveBayes.o
 
-build: $(PACKAGES)
+build: prep_build_dir $(PACKAGES)
 	ar -rv ./lib/libMedusa.a $(PACKAGES)
-	
+
+prep_build_dir:
+	mkdir -p build
+	mkdir -p build/Algorithms
+	mkdir -p lib
+
 
 #----------------------------#
 # Add new targets below here #

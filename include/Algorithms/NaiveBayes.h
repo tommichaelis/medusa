@@ -6,8 +6,6 @@
 
 namespace medusa {
     
-    class map;
-    
     struct GaussianDist {
         double sum;
         double squaredSum;
@@ -24,7 +22,6 @@ namespace medusa {
         
     private:
         NaiveBayesConfig * configuration;
-        map * distributions;
         
     public:
         
