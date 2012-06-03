@@ -8,7 +8,7 @@ using namespace medusa;
 class RBMTest : public ::testing::Test {
     protected:
         virtual void SetUp() {
-            Configuration config;
+            RBMConfig config;
             config.epsResultBias = 0.3;
             config.epsSourceBias = 0.7;
             config.epsWeights = 0.2;
@@ -27,18 +27,18 @@ class RBMTest : public ::testing::Test {
 TEST_F(RBMTest, DoLearn) {
     
     mat input = "1 0 1 1 0; 1 1 0 1 1;";
-    int out = rbm->doLearn(input);
+    int out = rbm->learn(input);
     EXPECT_EQ( 1, out );
     
     mat bad_input = "1 0 1 1 1 0; 1 0 0 1 0 1;";
-    ASSERT_THROW( rbm->doLearn(bad_input), MatrixSizeException );
+    ASSERT_THROW( rbm->learn(bad_input), MatrixSizeException );
      
 }
 
 TEST_F(RBMTest, RunForwards) {
     
     mat input = "1 0 1 1 0; 1 1 0 1 1;";
-    rbm->doLearn(input);
+    rbm->learn(input);
     
     mat run = "0 1 0 0 1; 0 0 0 1 0; 1 1 0 1 0;";
     mat out = rbm->runForwards(run);
@@ -51,7 +51,7 @@ TEST_F(RBMTest, RunForwards) {
 
 TEST_F(RBMTest, RunBackwards) {
     mat input = "1 0 1 1 0; 1 1 0 1 1;";
-    rbm->doLearn(input);
+    rbm->learn(input);
     
     mat run = "0 0; 1 1; 0 1; 1 0; 0 0;";
     mat out = rbm->runBackwards(run);

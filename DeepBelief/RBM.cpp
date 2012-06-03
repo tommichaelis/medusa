@@ -10,11 +10,11 @@ using namespace medusa;
  * 
  * @param Configuration config
  */
-RBM::RBM( Configuration config ){
+RBM::RBM( RBMConfig config ){
 
-    configuration = new Configuration;
+    configuration = new RBMConfig;
     weights = new mat;
-    biases = new Biases;
+    biases = new RBMBiases;
     weightIncr = new mat;
     
     *configuration = config;
@@ -45,7 +45,7 @@ void RBM::resetIncrements()
  * @param mat data
  * @return int
  */
-int RBM::doLearn( mat data ){
+virtual int RBM::learn( mat data ){
 
 	for( int iter = 0; iter < configuration->iterations; iter++ ){
 
@@ -102,6 +102,16 @@ mat RBM::runForwards( mat inputMatrix ){
  */
 mat RBM::runBackwards( mat inputMatrix ){
     return sampleDistribution( generateProbabilityMatrix( inputMatrix, biases->sourceBiases, weights->t() ) );
+}
+
+/** 
+ * Alias for runForwards
+ * 
+ * @param mat inputMatrix
+ * @return mat
+ */
+virtual mat RBM::run( mat inputMatrix ){
+    return runForwards( inputMatrix );
 }
 
 /**

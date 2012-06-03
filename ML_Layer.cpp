@@ -1,18 +1,46 @@
-/* 
- * File:   ML_Layer.cpp
- * Author: tommichaelis
- * 
- * Created on 02 June 2012, 15:32
- */
-
 #include "ML_Layer.h"
 
-ML_Layer::ML_Layer() {
+using namespace medusa;
+
+
+int ML_Layer::learnIterative( mat matrix )
+{
+    int success = learn( matrix );
+    
+    if( nextLayer != NULL && success == 1 ) {
+        mat output = run( matrix );
+        return nextLayer->learnIterative( output );
+    } else {
+        return success;
+    }
 }
 
-ML_Layer::ML_Layer(const ML_Layer& orig) {
+int ML_Layer::runIterative( mat matrix )
+{
+    mat output = run( matrix );
+    
+    if( nextLayer != NULL ) {
+        return nextLayer->runIterative( output );
+    } else {
+        return output;
+    }
 }
 
-ML_Layer::~ML_Layer() {
+void ML_Layer::setNextLayer(ML_Layer* next) {
+    nextLayer = next;
 }
+
+void ML_Layer::setPreviousLayer(ML_Layer* previous) {
+    previousLayer = previous;
+}
+
+
+//ML_Layer::ML_Layer() {
+//}
+//
+//ML_Layer::ML_Layer(const ML_Layer& orig) {
+//}
+//
+//ML_Layer::~ML_Layer() {
+//}
 

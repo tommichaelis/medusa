@@ -8,68 +8,65 @@
 using namespace arma;
 
 namespace medusa {
-    
-    struct Biases
-    {
+
+    struct RBMBiases {
         mat resultBiases;
         mat sourceBiases;
-        
+
         mat resultBiasIncr;
         mat sourceBiasIncr;
     };
-    
-    struct Output
-    {
+
+    struct Output {
         mat result;
         mat coincidence;
         mat density;
     };
-    
-    struct Configuration {
 
+    struct RBMConfig {
         unsigned int resultDimensions;
         unsigned int sourceDimensions;
-            
+
         unsigned int iterations;
-            
+
         double weightCost;
         double momentum;
         double epsWeights;
         double epsSourceBias;
         double epsResultBias;
-        
+
     };
-    
-    class RBM : public ML_Layer{
 
-            private:
-                    mat * weights;
-                    mat * weightIncr;
+    class RBM : public ML_Layer {
+    private:
+        mat * weights = NULL;
+        mat * weightIncr = NULL;
 
-                    Configuration * configuration;
-                    Biases * biases;
+        RBMConfig * configuration = NULL;
+        RBMBiases * biases = NULL;
 
-                    void resetIncrements();
-                            
-                    Output stepRBM( mat matrix );
+        void resetIncrements();
 
-                    mat generateProbabilityMatrix( 	
-                                        mat matrix,
-                                        mat bias,
-                                        mat weights 
-                    );
+        Output stepRBM(mat matrix);
 
-                    mat sampleDistribution( mat matrix );
+        mat generateProbabilityMatrix(
+                mat matrix,
+                mat bias,
+                mat weights
+                );
 
-            public:
-                
-                    int doLearn( mat data );
+        mat sampleDistribution(mat matrix);
 
-                    mat runForwards( mat matrix );
-                    mat runBackwards( mat matrix );
+    public:
 
-                    RBM( Configuration config );
-                    ~RBM();
+        virtual int learn( mat data );
+        virtual mat run( mat input );
+
+        mat runForwards(mat matrix);
+        mat runBackwards(mat matrix);
+
+        RBM(RBMConfig config);
+        ~RBM();
     };
 
 }
