@@ -2,19 +2,22 @@
 #ifndef ML_LAYER_H
 #define	ML_LAYER_H
 
+#include "armadillo"
+
+using namespace arma;
+
 namespace medusa {
     
     class ML_Layer {
     private:
-        ML_Layer* nextLayer = NULL;
-        ML_Layer* previousLayer = NULL;
+        ML_Layer* nextLayer;
+        ML_Layer* previousLayer;
         
     public:
         
-        virtual int learn( mat data ) = 0;
-        virtual int run( mat input ) = 0;
+        virtual mat run( mat input ) = 0;
         
-        int learnIterative( mat matrix );
+        virtual int learnIterative( mat matrix, mat classifiers ) = 0;
         mat runIterative( mat matrix );
         
         void setNextLayer( ML_Layer* next );

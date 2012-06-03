@@ -1,6 +1,6 @@
 #include <iostream>
 #include <gtest/gtest.h>
-#include <DeepBelief/RBM.h>
+#include <Algorithms/RBM.h>
 #include <Exceptions/MatrixSizeException.h>
 
 using namespace medusa;
@@ -24,7 +24,7 @@ class RBMTest : public ::testing::Test {
         RBM * rbm;
 };
 
-TEST_F(RBMTest, DoLearn) {
+TEST_F(RBMTest, Learn) {
     
     mat input = "1 0 1 1 0; 1 1 0 1 1;";
     int out = rbm->learn(input);

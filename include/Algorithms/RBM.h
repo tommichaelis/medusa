@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "armadillo"
-#include "../ML_Layer.h"
+#include "../ML_UnsupervisedLayer.h"
 
 using namespace arma;
 
@@ -37,13 +37,13 @@ namespace medusa {
 
     };
 
-    class RBM : public ML_Layer {
+    class RBM : public ML_UnsupervisedLayer {
     private:
-        mat * weights = NULL;
-        mat * weightIncr = NULL;
+        mat * weights;
+        mat * weightIncr;
 
-        RBMConfig * configuration = NULL;
-        RBMBiases * biases = NULL;
+        RBMConfig * configuration;
+        RBMBiases * biases;
 
         void resetIncrements();
 

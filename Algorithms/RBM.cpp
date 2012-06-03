@@ -1,4 +1,4 @@
-#include <DeepBelief/RBM.h>
+#include <Algorithms/RBM.h>
 #include <Exceptions/MatrixSizeException.h>
 
 using namespace arma;
@@ -45,7 +45,7 @@ void RBM::resetIncrements()
  * @param mat data
  * @return int
  */
-virtual int RBM::learn( mat data ){
+int RBM::learn( mat data ){
 
 	for( int iter = 0; iter < configuration->iterations; iter++ ){
 
@@ -110,7 +110,7 @@ mat RBM::runBackwards( mat inputMatrix ){
  * @param mat inputMatrix
  * @return mat
  */
-virtual mat RBM::run( mat inputMatrix ){
+mat RBM::run( mat inputMatrix ){
     return runForwards( inputMatrix );
 }
 
