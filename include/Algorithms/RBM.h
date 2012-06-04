@@ -64,6 +64,9 @@ namespace medusa {
 
         mat runForwards(mat matrix);
         mat runBackwards(mat matrix);
+        
+        virtual MatrixFormat getOutputFormat();
+        virtual MatrixFormat getInputFormat();
 
         RBM(RBMConfig config);
         ~RBM();

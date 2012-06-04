@@ -8,10 +8,22 @@ using namespace arma;
 
 namespace medusa {
     
+    const char * const BOOL = "boolean";
+    const char * const DOUBLE = "double";
+    const char * const INT = "integer";
+    
+    struct MatrixFormat {
+        unsigned int size;
+        const char * format;
+        
+    };
+    
     class ML_Layer {
     private:
         ML_Layer* nextLayer;
         ML_Layer* previousLayer;
+
+        void setPreviousLayer( ML_Layer* previous );
         
     public:
         
@@ -20,8 +32,10 @@ namespace medusa {
         virtual int learnIterative( mat matrix, umat classifiers ) = 0;
         mat runIterative( mat matrix );
         
+        virtual MatrixFormat getOutputFormat() = 0;
+        virtual MatrixFormat getInputFormat() = 0;
+        
         void setNextLayer( ML_Layer* next );
-        void setPreviousLayer( ML_Layer* previous );
 
     };
 }

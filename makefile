@@ -20,6 +20,8 @@ prep_build_dir:
 	mkdir -p build/Algorithms
 	mkdir -p lib
 
+clean:
+	rm -rf build
 
 #----------------------------#
 # Add new targets below here #

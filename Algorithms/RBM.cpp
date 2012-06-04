@@ -10,34 +10,53 @@ using namespace medusa;
  * 
  * @param Configuration config
  */
-RBM::RBM( RBMConfig config ){
+RBM::RBM( RBMConfig config ) {
 
     configuration = new RBMConfig;
     weights = new mat;
     biases = new RBMBiases;
     weightIncr = new mat;
-    
+
     *configuration = config;
-    
+
     biases->resultBiases = zeros( 1, configuration->resultDimensions );
     biases->sourceBiases = zeros( 1, configuration->sourceDimensions );
-    
-    *weights = 0.1*randn( 
-                         configuration->sourceDimensions,
-                         configuration->resultDimensions 
-                       );
-    
-    resetIncrements();
+
+    *weights = 0.1 * randn(
+                            configuration->sourceDimensions,
+                            configuration->resultDimensions
+                            );
+
+    resetIncrements( );
 }
 
-void RBM::resetIncrements()
-{
+void RBM::resetIncrements( ) {
     biases->resultBiasIncr = zeros( 1, configuration->resultDimensions );
     biases->sourceBiasIncr = zeros( 1, configuration->sourceDimensions );
     *weightIncr = zeros(
                          configuration->sourceDimensions,
-                         configuration->resultDimensions 
-                       );
+                         configuration->resultDimensions
+                         );
+}
+
+/**
+ * @return MatrixFormat
+ */
+MatrixFormat RBM::getInputFormat( ) {
+    MatrixFormat format;
+    format.format = BOOL;
+    format.size = configuration->sourceDimensions;
+    return format;
+}
+
+/**
+ * @return MatrixFormat
+ */
+MatrixFormat RBM::getOutputFormat( ) {
+    MatrixFormat format;
+    format.format = BOOL;
+    format.size = configuration->resultDimensions;
+    return format;
 }
 
 /**
@@ -45,43 +64,43 @@ void RBM::resetIncrements()
  * @param mat data
  * @return int
  */
-int RBM::learn( mat data ){
+int RBM::learn( mat data ) {
 
-	for( int iter = 0; iter < configuration->iterations; iter++ ){
+    for ( int iter = 0; iter < configuration->iterations; iter++ ) {
 
         Output realOutput = stepRBM( data );
 
         // Create some boolean hidden variables from the probabilities
         mat resultStates = sampleDistribution( realOutput.result );
-		
-        mat imaginedMatrix = generateProbabilityMatrix( resultStates, biases->sourceBiases, weights->t() );
-        
+
+        mat imaginedMatrix = generateProbabilityMatrix( resultStates, biases->sourceBiases, weights->t( ) );
+
         Output imaginedOutput = stepRBM( imaginedMatrix );
-        
-
-		*weightIncr = configuration->momentum * (*weightIncr);
-						+ ( configuration->epsWeights
-						* ( (realOutput.coincidence - imaginedOutput.coincidence)/data.n_rows
-							- (*weights)*configuration->weightCost) );
-
-		biases->sourceBiasIncr = configuration->momentum*biases->sourceBiasIncr
-							+ ( ( configuration->epsSourceBias/data.n_rows )
-							* ( sum( data ) - sum( imaginedMatrix )) );
 
 
-		
-		biases->resultBiasIncr = configuration->momentum*biases->resultBiasIncr
-							+ ( ( configuration->epsResultBias/data.n_rows )
-							* (realOutput.density - imaginedOutput.density) );
-		
-		
-		*weights = *weights + *weightIncr;
-		biases->sourceBiases += biases->sourceBiasIncr;
-		biases->resultBiases += biases->resultBiasIncr;
-	}
+        *weightIncr = configuration->momentum * ( *weightIncr );
+        +( configuration->epsWeights
+                * ( ( realOutput.coincidence - imaginedOutput.coincidence ) / data.n_rows
+                - ( *weights ) * configuration->weightCost ) );
 
-	return 1;
-	
+        biases->sourceBiasIncr = configuration->momentum * biases->sourceBiasIncr
+                + ( ( configuration->epsSourceBias / data.n_rows )
+                * ( sum( data ) - sum( imaginedMatrix ) ) );
+
+
+
+        biases->resultBiasIncr = configuration->momentum * biases->resultBiasIncr
+                + ( ( configuration->epsResultBias / data.n_rows )
+                * ( realOutput.density - imaginedOutput.density ) );
+
+
+        *weights = *weights + *weightIncr;
+        biases->sourceBiases += biases->sourceBiasIncr;
+        biases->resultBiases += biases->resultBiasIncr;
+    }
+
+    return 1;
+
 }
 
 /** 
@@ -90,7 +109,7 @@ int RBM::learn( mat data ){
  * @param mat inputMatrix
  * @return mat
  */
-mat RBM::runForwards( mat inputMatrix ){
+mat RBM::runForwards( mat inputMatrix ) {
     return sampleDistribution( generateProbabilityMatrix( inputMatrix, biases->resultBiases, *weights ) );
 }
 
@@ -100,8 +119,8 @@ mat RBM::runForwards( mat inputMatrix ){
  * @param mat inputMatrix
  * @return mat
  */
-mat RBM::runBackwards( mat inputMatrix ){
-    return sampleDistribution( generateProbabilityMatrix( inputMatrix, biases->sourceBiases, weights->t() ) );
+mat RBM::runBackwards( mat inputMatrix ) {
+    return sampleDistribution( generateProbabilityMatrix( inputMatrix, biases->sourceBiases, weights->t( ) ) );
 }
 
 /** 
@@ -110,7 +129,7 @@ mat RBM::runBackwards( mat inputMatrix ){
  * @param mat inputMatrix
  * @return mat
  */
-mat RBM::run( mat inputMatrix ){
+mat RBM::run( mat inputMatrix ) {
     return runForwards( inputMatrix );
 }
 
@@ -120,10 +139,9 @@ mat RBM::run( mat inputMatrix ){
  * @param mat matrix
  * @return mat
  */
-mat RBM::sampleDistribution( mat matrix )
-{
-    umat sample = ( matrix > 0.5*randn<mat>( matrix.n_rows, matrix.n_cols ) );
-    return conv_to<mat>::from(sample);
+mat RBM::sampleDistribution( mat matrix ) {
+    umat sample = ( matrix > 0.5 * randn<mat > ( matrix.n_rows, matrix.n_cols ) );
+    return conv_to<mat>::from( sample );
 }
 
 /** Do a step in an RBM, from a source level to a target level.
@@ -134,23 +152,23 @@ mat RBM::sampleDistribution( mat matrix )
  * @param mat matrix
  * @return Output
  */
-Output RBM::stepRBM( mat matrix ){
+Output RBM::stepRBM( mat matrix ) {
 
     Output output;
-    
-	/* This generates some probabilities */
-	
+
+    /* This generates some probabilities */
+
     output.result = generateProbabilityMatrix( matrix, biases->resultBiases, *weights );
-	
-	/* The following matrix contains information on the proportion of times
-	 * each hidden variable is on at the same time as each visible one.
-	 */
-	output.coincidence = matrix.t() * output.result;
-    
-	/* Stores the 'onness' of hidden and visible variables on this step */
-	output.density = sum( output.result );
-	
- 	return output;
+
+    /* The following matrix contains information on the proportion of times
+     * each hidden variable is on at the same time as each visible one.
+     */
+    output.coincidence = matrix.t( ) * output.result;
+
+    /* Stores the 'onness' of hidden and visible variables on this step */
+    output.density = sum( output.result );
+
+    return output;
 
 }
 
@@ -163,32 +181,32 @@ Output RBM::stepRBM( mat matrix ){
  * @param weights
  * @return 
  */
-mat RBM::generateProbabilityMatrix( 	
-                    mat matrix,
-        			mat bias,
-                    mat weights 
-                ){
-    if( matrix.n_cols != weights.n_rows ){
-        MatrixSizeException exception ("RBM: Matrix columns and Weight rows did not match");
-        throw exception;
-    }
-    
-    if( bias.n_cols != weights.n_cols ){
-        MatrixSizeException exception ("RBM: Matrix columns and Weight rows did not match");
+mat RBM::generateProbabilityMatrix(
+                                    mat matrix,
+                                    mat bias,
+                                    mat weights
+                                    ) {
+    if ( matrix.n_cols != weights.n_rows ) {
+        MatrixSizeException exception( "RBM: Matrix columns and Weight rows did not match" );
         throw exception;
     }
 
-	/* This generates some probabilities */
-	
-	return 1/( 1 + exp(
-						   - matrix*weights
-						   - repmat( bias, matrix.n_rows, 1 )
-                      )
-             );
-    
+    if ( bias.n_cols != weights.n_cols ) {
+        MatrixSizeException exception( "RBM: Matrix columns and Weight rows did not match" );
+        throw exception;
+    }
+
+    /* This generates some probabilities */
+
+    return 1 / ( 1 + exp(
+                          -matrix * weights
+                          - repmat( bias, matrix.n_rows, 1 )
+                          )
+            );
+
 }
 
-RBM::~RBM(){
+RBM::~RBM( ) {
     delete configuration;
     delete weights;
     delete biases;
