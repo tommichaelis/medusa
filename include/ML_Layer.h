@@ -8,6 +8,7 @@ using namespace arma;
 
 namespace medusa {
     
+    const char * const NONE = "none";
     const char * const BOOL = "boolean";
     const char * const DOUBLE = "double";
     const char * const INT = "integer";

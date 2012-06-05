@@ -10,7 +10,8 @@ PACKAGES=   ./build/ML_Layer.o \
 	    ./build/ML_SupervisedLayer.o \
 	    ./build/ML_UnsupervisedLayer.o \
 	    ./build/Algorithms/RBM.o \
-	    ./build/Algorithms/NaiveBayes.o
+	    ./build/Algorithms/NaiveBayes.o \
+	    ./build/FileManager/CSVManager.o
 
 build: prep_build_dir $(PACKAGES)
 	ar -rv ./lib/libMedusa.a $(PACKAGES)
@@ -18,6 +19,7 @@ build: prep_build_dir $(PACKAGES)
 prep_build_dir:
 	mkdir -p build
 	mkdir -p build/Algorithms
+	mkdir -p build/FileManager
 	mkdir -p lib
 
 clean:
@@ -30,6 +32,10 @@ clean:
 # The basic layer abstract class
 ./build/ML_Layer.o: ./ML_Layer.cpp
 	g++ -c $(COMMON_DIRS) ./ML_Layer.cpp -o ./build/ML_Layer.o
+	
+#CSV Loading layer algorithm
+./build/FileManager/CSVManager.o: ./FileManager/CSVManager.cpp
+	g++ -c $(COMMON_DIRS) ./FileManager/CSVManager.cpp -o ./build/FileManager/CSVManager.o
 	
 # Abstract class for supervised layers
 ./build/ML_SupervisedLayer.o: ./ML_SupervisedLayer.cpp

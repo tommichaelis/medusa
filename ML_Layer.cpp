@@ -19,7 +19,7 @@ void ML_Layer::setNextLayer(ML_Layer* next) {
     MatrixFormat nextIn = next->getInputFormat();
     MatrixFormat thisOut = getOutputFormat();
     
-    if ( nextIn.size != thisOut.size || strcmp( nextIn.format, thisOut.format ) != 0 ) {
+    if ( nextIn.format == NONE || nextIn.size != thisOut.size || strcmp( nextIn.format, thisOut.format ) != 0 ) {
         MatrixTypeException exception ("The output format of this layer does not match the input format of the next one");
         throw exception;
     }

@@ -21,8 +21,8 @@ namespace medusa {
 
         for ( int iter = 0; iter < data.n_rows; data++ ) {
 
-            GaussianDist* dist = distributions[ classifier.row( iter ) ];
             rowvec dataRow = data.row( iter );
+            GaussianDist* dist = distributions[ classifier.row( iter ) ];
 
             if ( dist == NULL ) {
                 dist = new GaussianDist( dataRow.n_cols );
@@ -35,6 +35,8 @@ namespace medusa {
             total->count++;
             total->squaredSum = total->squaredSum + pow( dataRow, 2 );
             total->sum = total->sum + dataRow;
+
+
         }
 
     }
@@ -77,23 +79,31 @@ namespace medusa {
             MatrixSizeException exception( "NaiveBayes: Unexpected data dimension" );
             throw exception;
         }
-        
+
         map< unsigned int, GaussianDist*>::iterator distIter;
-        
-        for( int dataIter = 0; dataIter < input.n_rows; dataIter++ )
-        {
+
+        mat resultSet;
+
+        for ( int dataIter = 0; dataIter < input.n_rows; dataIter++ ) {
             unsigned int bestClass;
             double bestNumerator;
-            
+
             rowvec data = input.row( dataIter );
-            for( distIter = distributions.begin(); distIter != distributions.end(); distIter++ ) {
+            for ( distIter = distributions.begin( ); distIter != distributions.end( ); distIter++ ) {
                 double numerator = getBayesNumerator( data, distIter->second );
-                if( numerator > bestNumerator ) {
+                if ( numerator > bestNumerator ) {
                     bestClass = distIter->first;
                     bestNumerator = numerator;
                 }
             }
+
+            rowvec result = zeros( data.n_cols + 1 );
+            result.cols( 1, result.n_cols ) = data;
+            result.col( 0 ) = bestClass;
+            resultSet.row( dataIter ) = result;
         }
+        
+        return resultSet;
     }
 
     NaiveBayes::NaiveBayes( NaiveBayesConfig config ) {
@@ -103,14 +113,14 @@ namespace medusa {
 
     NaiveBayes::~NaiveBayes( ) {
     }
-    
-    MatrixFormat NaiveBayes::getInputFormat() {
+
+    MatrixFormat NaiveBayes::getInputFormat( ) {
         MatrixFormat format;
         format.format = DOUBLE;
         format.size = configuration->sourceDimensions;
     }
-    
-    MatrixFormat NaiveBayes::getOutputFormat() {
+
+    MatrixFormat NaiveBayes::getOutputFormat( ) {
         MatrixFormat format;
         format.format = DOUBLE;
         format.size = configuration->sourceDimensions + 1;
