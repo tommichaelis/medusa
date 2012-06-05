@@ -62,6 +62,18 @@ TEST_F(RBMTest, RunBackwards) {
     ASSERT_THROW( rbm->runForwards(bad_run), MatrixSizeException );
 }
 
+TEST_F(RBMTest, GetInputMatrix) {
+    MatrixFormat format = rbm->getInputFormat();
+    EXPECT_STREQ( format.format, BOOL );
+    EXPECT_EQ( format.size, 5 );
+}
+
+TEST_F(RBMTest, GetOutputMatrix) {
+    MatrixFormat format = rbm->getOutputFormat();
+    EXPECT_STREQ( format.format, BOOL );
+    EXPECT_EQ( format.size, 2 );
+}
+
 GTEST_API_ int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

@@ -1,8 +1,8 @@
-#include "ML_UnsupervisedLayer.h"
+#include "UnsupervisedLayer.h"
 
 using namespace medusa;
 
-int ML_UnsupervisedLayer::learnIterative( mat matrix, umat classifiers )
+int UnsupervisedLayer::learnIterative( mat matrix, umat classifiers )
 {
     int success = learn( matrix );
     

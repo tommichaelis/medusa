@@ -1,6 +1,6 @@
 
-#ifndef ML_LAYER_H
-#define	ML_LAYER_H
+#ifndef LAYER_H
+#define	LAYER_H
 
 #include "armadillo"
 
@@ -19,12 +19,12 @@ namespace medusa {
         
     };
     
-    class ML_Layer {
+    class Layer {
     private:
-        ML_Layer* nextLayer;
-        ML_Layer* previousLayer;
+        Layer* nextLayer;
+        Layer* previousLayer;
 
-        void setPreviousLayer( ML_Layer* previous );
+        void setPreviousLayer( Layer* previous );
         
     public:
         
@@ -36,10 +36,10 @@ namespace medusa {
         virtual MatrixFormat getOutputFormat() = 0;
         virtual MatrixFormat getInputFormat() = 0;
         
-        void setNextLayer( ML_Layer* next );
+        void setNextLayer( Layer* next );
 
     };
 }
 
-#endif	/* ML_LAYER_H */
+#endif
 

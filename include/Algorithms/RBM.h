@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "armadillo"
-#include "../ML_UnsupervisedLayer.h"
+#include "../UnsupervisedLayer.h"
 
 using namespace arma;
 
@@ -37,7 +37,7 @@ namespace medusa {
 
     };
 
-    class RBM : public ML_UnsupervisedLayer {
+    class RBM : public UnsupervisedLayer {
     private:
         mat * weights;
         mat * weightIncr;

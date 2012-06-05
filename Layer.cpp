@@ -1,10 +1,10 @@
-#include "ML_Layer.h"
+#include "Layer.h"
 #include "string.h"
 #include "Exceptions/MatrixTypeException.h"
 using namespace medusa;
 
 
-mat ML_Layer::runIterative( mat matrix )
+mat Layer::runIterative( mat matrix )
 {
     mat output = run( matrix );
     
@@ -15,7 +15,7 @@ mat ML_Layer::runIterative( mat matrix )
     }
 }
 
-void ML_Layer::setNextLayer(ML_Layer* next) {
+void Layer::setNextLayer(Layer* next) {
     MatrixFormat nextIn = next->getInputFormat();
     MatrixFormat thisOut = getOutputFormat();
     
@@ -28,7 +28,7 @@ void ML_Layer::setNextLayer(ML_Layer* next) {
     nextLayer->setPreviousLayer( this );
 }
 
-void ML_Layer::setPreviousLayer(ML_Layer* previous) {
+void Layer::setPreviousLayer(Layer* previous) {
     previousLayer = previous;
 }
 

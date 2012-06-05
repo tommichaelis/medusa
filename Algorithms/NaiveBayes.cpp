@@ -1,6 +1,8 @@
 #include "Algorithms/NaiveBayes.h"
 #include "Exceptions/MatrixSizeException.h"
 
+#include <iostream>
+
 #include "math.h"
 
 namespace medusa {
@@ -19,7 +21,7 @@ namespace medusa {
             throw exception;
         }
 
-        for ( int iter = 0; iter < data.n_rows; data++ ) {
+        for ( int iter = 0; iter < data.n_rows; iter++ ) {
 
             rowvec dataRow = data.row( iter );
             GaussianDist* dist = distributions[ classifier.row( iter ) ];
@@ -38,6 +40,7 @@ namespace medusa {
 
 
         }
+        return 1;
 
     }
 
@@ -107,6 +110,7 @@ namespace medusa {
     }
 
     NaiveBayes::NaiveBayes( NaiveBayesConfig config ) {
+        configuration = new NaiveBayesConfig();
         *configuration = config;
         total = new GaussianDist( configuration->sourceDimensions );
     }
@@ -118,12 +122,14 @@ namespace medusa {
         MatrixFormat format;
         format.format = DOUBLE;
         format.size = configuration->sourceDimensions;
+        return format;
     }
 
     MatrixFormat NaiveBayes::getOutputFormat( ) {
         MatrixFormat format;
         format.format = DOUBLE;
         format.size = configuration->sourceDimensions + 1;
+        return format;
     }
 
 }

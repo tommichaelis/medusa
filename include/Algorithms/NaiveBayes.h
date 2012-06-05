@@ -1,7 +1,7 @@
 #ifndef NAIVEBAYES_H
 #define	NAIVEBAYES_H
 
-#include "../ML_SupervisedLayer.h"
+#include "../SupervisedLayer.h"
 #include "map"
 
 using namespace std;
@@ -26,7 +26,7 @@ namespace medusa {
         unsigned int sourceDimensions;
     };
 
-    class NaiveBayes : public ML_SupervisedLayer {
+    class NaiveBayes : public SupervisedLayer {
         
     private:
         NaiveBayesConfig * configuration;

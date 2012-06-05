@@ -1,18 +1,18 @@
 
-#ifndef ML_UNSUPERVISED_LAYER_H
-#define	ML_UNSUPERVISED_LAYER_H
+#ifndef UNSUPERVISED_LAYER_H
+#define	UNSUPERVISED_LAYER_H
 
 #include "armadillo"
-#include "ML_Layer.h"
+#include "Layer.h"
 
 using namespace arma;
 
 namespace medusa {
     
-    class ML_UnsupervisedLayer : public ML_Layer {
+    class UnsupervisedLayer : public Layer {
     private:
-        ML_Layer* nextLayer;
-        ML_Layer* previousLayer;
+        Layer* nextLayer;
+        Layer* previousLayer;
         
     public:
         
@@ -25,5 +25,5 @@ namespace medusa {
     };
 }
 
-#endif	/* ML_LAYER_H */
+#endif
 

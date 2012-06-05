@@ -6,9 +6,9 @@ COMMON_DIRS=-I$(INCLUDE_DIR) -L$(LIB_DIR)
 # Add new targets to this list, and their build commands below #
 #--------------------------------------------------------------#
 
-PACKAGES=   ./build/ML_Layer.o \
-	    ./build/ML_SupervisedLayer.o \
-	    ./build/ML_UnsupervisedLayer.o \
+PACKAGES=   ./build/Layer.o \
+	    ./build/SupervisedLayer.o \
+	    ./build/UnsupervisedLayer.o \
 	    ./build/Algorithms/RBM.o \
 	    ./build/Algorithms/NaiveBayes.o \
 	    ./build/FileManager/CSVManager.o
@@ -30,20 +30,20 @@ clean:
 #----------------------------#
 
 # The basic layer abstract class
-./build/ML_Layer.o: ./ML_Layer.cpp
-	g++ -c $(COMMON_DIRS) ./ML_Layer.cpp -o ./build/ML_Layer.o
+./build/Layer.o: ./Layer.cpp
+	g++ -c $(COMMON_DIRS) ./Layer.cpp -o ./build/Layer.o
 	
 #CSV Loading layer algorithm
 ./build/FileManager/CSVManager.o: ./FileManager/CSVManager.cpp
 	g++ -c $(COMMON_DIRS) ./FileManager/CSVManager.cpp -o ./build/FileManager/CSVManager.o
 	
 # Abstract class for supervised layers
-./build/ML_SupervisedLayer.o: ./ML_SupervisedLayer.cpp
-	g++ -c $(COMMON_DIRS) ./ML_SupervisedLayer.cpp -o ./build/ML_SupervisedLayer.o
+./build/SupervisedLayer.o: ./SupervisedLayer.cpp
+	g++ -c $(COMMON_DIRS) ./SupervisedLayer.cpp -o ./build/SupervisedLayer.o
 	
 #Abstract class for un-supervised layers
-./build/ML_UnsupervisedLayer.o: ./ML_UnsupervisedLayer.cpp
-	g++ -c $(COMMON_DIRS) ./ML_UnsupervisedLayer.cpp -o ./build/ML_UnsupervisedLayer.o
+./build/UnsupervisedLayer.o: ./UnsupervisedLayer.cpp
+	g++ -c $(COMMON_DIRS) ./UnsupervisedLayer.cpp -o ./build/UnsupervisedLayer.o
 
 #RBM algorithm
 ./build/Algorithms/RBM.o: ./Algorithms/RBM.cpp
