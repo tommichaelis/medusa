@@ -1,6 +1,8 @@
 INCLUDE_DIR=./include
+TP_INCLUDE_DIR=./ThirdParty/include
 LIB_DIR=./lib
-COMMON_DIRS=-I$(INCLUDE_DIR) -L$(LIB_DIR)
+TP_LIB_DIR=./ThirdParty/lib
+COMMON_DIRS=-I$(INCLUDE_DIR) -I$(TP_INCLUDE_DIR) -L$(LIB_DIR) -L$(TP_LIB_DIR)
 
 #--------------------------------------------------------------#
 # Add new targets to this list, and their build commands below #
@@ -11,16 +13,19 @@ PACKAGES=   ./build/Layer.o \
 	    ./build/UnsupervisedLayer.o \
 	    ./build/Algorithms/RBM.o \
 	    ./build/Algorithms/NaiveBayes.o \
-	    ./build/FileManager/CSVManager.o
+	    ./build/Components/File.o
 
-build: prep_build_dir $(PACKAGES)
+build: prep_build_dir make_third_party $(PACKAGES)
 	ar -rv ./lib/libMedusa.a $(PACKAGES)
 
 prep_build_dir:
 	mkdir -p build
 	mkdir -p build/Algorithms
-	mkdir -p build/FileManager
+	mkdir -p build/Components
 	mkdir -p lib
+	
+make_third_party:
+	make -C ./ThirdParty/libsvm
 
 clean:
 	rm -rf build
@@ -34,8 +39,8 @@ clean:
 	g++ -c $(COMMON_DIRS) ./Layer.cpp -o ./build/Layer.o
 	
 #CSV Loading layer algorithm
-./build/FileManager/CSVManager.o: ./FileManager/CSVManager.cpp
-	g++ -c $(COMMON_DIRS) ./FileManager/CSVManager.cpp -o ./build/FileManager/CSVManager.o
+./build/Components/File.o: ./Components/File.cpp
+	g++ -c $(COMMON_DIRS) ./Components/File.cpp -o ./build/Components/File.o
 	
 # Abstract class for supervised layers
 ./build/SupervisedLayer.o: ./SupervisedLayer.cpp

@@ -1,7 +1,7 @@
 #include "SupervisedLayer.h"
 #include "armadillo"
 using namespace arma;
-using namespace medusa;
+using namespace Medusa;
 
 int SupervisedLayer::learnIterative( mat matrix, umat classifiers )
 {

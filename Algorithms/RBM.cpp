@@ -3,8 +3,7 @@
 
 using namespace arma;
 using namespace std;
-using namespace medusa;
-
+using namespace Medusa;
 /**
  * Construct using a configuration object.
  * 

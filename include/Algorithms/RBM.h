@@ -7,7 +7,7 @@
 
 using namespace arma;
 
-namespace medusa {
+namespace Medusa {
 
     struct RBMBiases {
         mat resultBiases;

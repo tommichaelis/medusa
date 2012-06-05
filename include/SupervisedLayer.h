@@ -7,7 +7,7 @@
 
 using namespace arma;
 
-namespace medusa {
+namespace Medusa {
     
     class SupervisedLayer : public Layer {
     private:

@@ -1,6 +1,6 @@
 #include "UnsupervisedLayer.h"
 
-using namespace medusa;
+using namespace Medusa;
 
 int UnsupervisedLayer::learnIterative( mat matrix, umat classifiers )
 {

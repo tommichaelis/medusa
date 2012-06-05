@@ -1,4 +1,4 @@
-#include "FileManager/CSVManager.h"
+#include "Components/File.h"
 #include "armadillo"
 #include "string.h"
 #include "Exceptions/FileLoadException.h"
@@ -6,30 +6,29 @@
 using namespace std;
 
 using namespace arma;
+using namespace Medusa;
 
-namespace medusa {
 
     
-    MatrixFormat CSVManager::getInputFormat() {
+    MatrixFormat File::getInputFormat() {
         MatrixFormat format;
         format.format = NONE;
         format.size = 0;
         return format;
     }
     
-    CSVManager::CSVManager( const char * cFileName ) {
+    File::File( const char * cFileName ) {
         mat CSVMat;
         string fileName;
         fileName.assign( cFileName );
-        if( !LoadedMatrix->load( fileName, csv_ascii ) ) {
+        if( !LoadedMatrix->load( fileName ) ) {
             FileLoadException exception ("Failed to load the CSV file");
         }
         
         *LoadedMatrix = CSVMat;
     }
 
-    CSVManager::~CSVManager( ) {
+    File::~File( ) {
     }
     
-}
 

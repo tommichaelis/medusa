@@ -1,7 +1,8 @@
 #include "Layer.h"
 #include "string.h"
 #include "Exceptions/MatrixTypeException.h"
-using namespace medusa;
+
+using namespace Medusa;
 
 
 mat Layer::runIterative( mat matrix )

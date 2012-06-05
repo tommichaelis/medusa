@@ -3,7 +3,7 @@
 #include <Algorithms/RBM.h>
 #include <Exceptions/MatrixSizeException.h>
 
-using namespace medusa;
+using namespace Medusa;
 
 class RBMTest : public ::testing::Test {
     protected:

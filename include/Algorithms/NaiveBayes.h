@@ -3,10 +3,12 @@
 
 #include "../SupervisedLayer.h"
 #include "map"
+#include "armadillo"
 
 using namespace std;
+using namespace arma;
 
-namespace medusa {
+namespace Medusa {
     
     struct GaussianDist {
         rowvec sum;

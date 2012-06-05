@@ -1,16 +1,16 @@
-#ifndef CSVMANAGER_H
-#define	CSVMANAGER_H
+#ifndef FILE_H
+#define	FILE_H
 #include "armadillo"
 #include "../Layer.h"
 
 using namespace arma;
 
-namespace medusa {
+namespace Medusa {
 
-    class CSVManager : public Layer {
+    class File : public Layer {
     public:
-        CSVManager( const char * filename );
-        virtual ~CSVManager();
+        File( const char * filename );
+        virtual ~File();
         
         virtual MatrixFormat getInputFormat();
     private:

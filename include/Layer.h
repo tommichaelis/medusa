@@ -6,7 +6,7 @@
 
 using namespace arma;
 
-namespace medusa {
+namespace Medusa {
     
     const char * const NONE = "none";
     const char * const BOOL = "boolean";

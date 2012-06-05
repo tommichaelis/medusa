@@ -3,7 +3,7 @@
 #include <Algorithms/NaiveBayes.h>
 #include <Exceptions/MatrixSizeException.h>
 
-using namespace medusa;
+using namespace Medusa;
 
 class NaiveBayesTest : public ::testing::Test {
     protected:

@@ -5,7 +5,9 @@
 
 #include "math.h"
 
-namespace medusa {
+using namespace Medusa;
+using namespace arma;
+using namespace std;
 
     int NaiveBayes::learn( mat data, umat classifiers ) {
 
@@ -131,5 +133,3 @@ namespace medusa {
         format.size = configuration->sourceDimensions + 1;
         return format;
     }
-
-}
